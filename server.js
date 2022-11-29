@@ -15,4 +15,8 @@ app.use(express.json())
 const authRouter = require('./routes/auth')
 app.use('/auth', authRouter)
 
+app.get("*", (req, res) => {
+    res.status(404).json({ message: "Route not found" })
+})
+
 app.listen(3000, () => console.log("Server Started"))

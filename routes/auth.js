@@ -67,8 +67,4 @@ router.get("/test", verifyToken, async (req, res) => {
     res.status(200).json({ message: "Token valid", user: req.user })
 })
 
-router.get("*", (req, res) => {
-    res.status(404)
-})
-
 module.exports = router
