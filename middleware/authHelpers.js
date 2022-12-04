@@ -22,7 +22,7 @@ verifyToken = (req, res, next) => {
       if (user.logoutTime != decoded.logoutTime)
         return res.status(401).send({ message: "Provided token is not valid" })
 
-      res.user = user
+      req.user = user
       next()
     })
   })

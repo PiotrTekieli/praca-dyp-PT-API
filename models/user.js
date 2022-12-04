@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
         default: Date.now()
     },
     logoutTime: {
-        type: String,
+        type: Number,
     },
     active: {
         type: Boolean,

@@ -10,10 +10,13 @@ const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log("Connected To Database"))
 
-app.use(express.json())
+app.use(express.json({limit: "Infinity"}))
 
 const authRouter = require('./routes/auth')
 app.use('/auth', authRouter)
+
+const fileRouter = require('./routes/files')
+app.use('/file', fileRouter)
 
 app.get("*", (req, res) => {
     res.status(404).json({ message: "Route not found." })

@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const NO_EMAIL_CONFIRM = false
+const NO_EMAIL_CONFIRM = true
 const HOST = "http://localhost:3000"
 
 const express = require('express')
@@ -124,9 +124,9 @@ router.post('/login', async (req, res) => {
 })
 
 router.post('/logout', verifyToken, async (req, res) => {
-    res.user.logoutTime = new Date().getTime()
+    req.user.logoutTime = new Date().getTime()
     try {
-        const loggedOutUser = await res.user.save()
+        const loggedOutUser = await req.user.save()
         return res.status(200).send({ message: "Logged out successfully" })
     } catch (err) {
         return res.status(500).send({ message: err.message })
