@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
     },
     logoutTime: {
         type: String,
+    },
+    active: {
+        type: Boolean,
+        default: false
     }
 
 })

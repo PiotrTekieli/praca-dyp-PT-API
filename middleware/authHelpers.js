@@ -52,7 +52,7 @@ checkDuplicateUsers = (req, res, next) => {
             return
         }
 
-        if (user) {
+        if (user && user.active) {
             res.status(400).json({ message: "Email already exists" })
             return
         }
