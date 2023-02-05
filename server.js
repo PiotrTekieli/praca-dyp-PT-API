@@ -25,4 +25,4 @@ app.get("*", (req, res) => {
     res.status(404).json({ message: "Route not found." })
 })
 
-app.listen(4000, () => console.log("Server Started"))
+app.listen(process.env.PORT, () => console.log("Server Started"))
