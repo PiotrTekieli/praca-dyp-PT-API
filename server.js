@@ -12,6 +12,9 @@ db.once('open', () => console.log("Connected To Database"))
 
 app.use(express.json({limit: "Infinity"}))
 
+var cors = require('cors')
+app.use(cors())
+
 const authRouter = require('./routes/auth')
 app.use('/auth', authRouter)
 
@@ -22,4 +25,4 @@ app.get("*", (req, res) => {
     res.status(404).json({ message: "Route not found." })
 })
 
-app.listen(3000, () => console.log("Server Started"))
+app.listen(4000, () => console.log("Server Started"))

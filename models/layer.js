@@ -11,7 +11,6 @@ const layerSchema = new mongoose.Schema({
     },
     layer_name: {
         type: String,
-        required: true,
         default: "New Layer"
     },
     data: {

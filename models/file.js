@@ -20,7 +20,10 @@ const fileSchema = new mongoose.Schema({
     modify_date: {
         type: Number,
         default: Date.now()
-    }
+    },
+    thumbnail_data: {
+        type: String,
+    },
 })
 
 module.exports = mongoose.model('File', fileSchema)

@@ -15,6 +15,7 @@ checkIfOwner = async (req, res, next) => {
   }
 
   if (file && file.user_id.equals(user._id)) {
+    req.file = file
     next()
   } else
     return res.status(401).send({ message: "Unauthorized" })
