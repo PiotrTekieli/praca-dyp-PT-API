@@ -10,6 +10,21 @@ const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log("Connected To Database"))
 
+const jsonParserMiddleware = async(req, res, next) => {
+    if (!req.body || typeof req.body !== 'string') {
+        next();
+        return;
+    }
+    try {
+        req.body = JSON.parse(req.body);
+        next();
+    } catch (e) {
+        res.status(400).send({ message: 'Invalid data.' });
+    }
+}
+
+app.use(jsonParserMiddleware);
+
 app.use(express.json({limit: "Infinity"}))
 
 var cors = require('cors')

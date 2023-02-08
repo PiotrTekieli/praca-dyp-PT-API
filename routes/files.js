@@ -14,9 +14,13 @@ router.get('/:page?', verifyToken, async (req, res) => {
     try {
         const result = await File.find({
             user_id: req.user._id
-        }).sort( { modify_date: 'desc' } ).skip(req.params.page * 12).limit(12)
+        }).sort( { modify_date: 'desc' } ).skip(req.params.page * 8).limit(8)
 
-        res.status(200).json(result)
+        const count = await File.find({
+            user_id: req.user._id
+        }).count()
+
+        res.status(200).json({ files: result, count: count})
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -78,12 +82,22 @@ router.post('/save', verifyToken, checkIfOwner, async (req, res) => {
     res.status(200).send({ message: "Save successful" })
 })
 
+router.post('/rename', verifyToken, checkIfOwner, async (req, res) => {
+    if (!req.body.filename)
+        res.status(400).send({ message: "Bad request" })
+
+    try {
+        req.file.filename = req.body.filename
+        req.file.save()
+        res.status(200).send({ message: "Rename successful" })
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+})
+
 router.post('/delete', verifyToken, checkIfOwner, async (req, res) => {
     try {
         await req.file.remove()
-        // await File.deleteOne({
-        //     file_id: req.body.file_id
-        // })
 
         await Layer.deleteMany({
             file_id: req.body.file_id

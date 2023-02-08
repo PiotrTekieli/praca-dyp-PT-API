@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 const NO_EMAIL_CONFIRM = false
-const HOST = "http://localhost:3000"
 
 const express = require('express')
 const router = express.Router()
@@ -46,7 +45,7 @@ router.post('/signup', checkDuplicateUsers, async (req, res) => {
             html: `<h1>Email Confirmation for Drawing App</h1>
                 <h2>Hello!</h2>
                 <p>Thank you for creating your account! To complete the process please confirm your email by clicking on the following link:</p>
-                <a href=${HOST}/#/auth/confirm/${emailConfirmToken}>Click here!</a>
+                <a href=${process.env.FRONTEND_URL}/#/auth/confirm/${emailConfirmToken}>Click here!</a>
                 </div>`,
         }).catch(err => console.log(err));
     }
@@ -141,7 +140,7 @@ router.post('/logout', verifyToken, async (req, res) => {
 })
 
 router.get("/checkToken", verifyToken, async (req, res) => {
-    res.status(200).json({ message: "Token valid" })
+    res.status(200).json({ message: "Token valid", user: req.user })
 })
 
 router.post("/forgot-password", async (req, res) => {
@@ -168,7 +167,7 @@ router.post("/forgot-password", async (req, res) => {
             html: `<h1>Password Reset for Drawing App</h1>
                 <h2>Hello!</h2>
                 <p>If you want to reset your password, please click on the following link:</p>
-                <a href=${HOST}/#/auth/reset-password/${emailResetToken}>Click here!</a>
+                <a href=${process.env.FRONTEND_URL}/#/auth/reset-password/${emailResetToken}>Click here!</a>
                 </div>`,
         }).catch(err => console.log(err));
 
