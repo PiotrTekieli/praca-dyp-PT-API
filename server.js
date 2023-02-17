@@ -40,4 +40,11 @@ app.get("*", (req, res) => {
     res.status(404).json({ message: "Route not found." })
 })
 
-app.listen(process.env.PORT, () => console.log("Server Started"))
+const server = app.listen(process.env.PORT, () => console.log("Server Started"))
+
+function closeServer() {
+    mongoose.connection.close()
+    server.close()
+}
+
+module.exports = { closeServer }
